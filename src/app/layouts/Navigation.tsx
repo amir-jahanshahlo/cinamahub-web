@@ -18,7 +18,7 @@ function NavigationLinks({ mobile = false }: { mobile?: boolean }) {
         } ${
           isActive
             ? 'bg-cinema-accent/10 text-cinema-accent'
-            : 'text-cinema-muted hover:bg-white/5 hover:text-white'
+            : 'text-cinema-muted hover:bg-(--cinema-fill-hover) hover:text-cinema-text'
         }`
       }
     >

@@ -1,11 +1,12 @@
 import { useRef } from 'react'
 import { useLocation } from 'react-router'
+import { Button } from 'antd'
 import ShellIcon from './ShellIcon.tsx'
 
 function AIChatPanel() {
   const location = useLocation()
   const dialogRef = useRef<HTMLDialogElement>(null)
-  const closeRef = useRef<HTMLButtonElement>(null)
+  const closeRef = useRef<HTMLButtonElement | HTMLAnchorElement>(null)
 
   function openChat() {
     dialogRef.current?.showModal()
@@ -14,17 +15,18 @@ function AIChatPanel() {
 
   return (
     <>
-      <button
-        type="button"
+      <Button
+        type="primary"
         aria-label="Open AI assistant"
         aria-haspopup="dialog"
         aria-controls="ai-chat-dialog"
         onClick={openChat}
         className="chat-trigger fixed right-5 z-20 flex min-h-14 min-w-14 items-center justify-center gap-3 rounded-2xl border border-cinema-accent-hover/30 bg-cinema-accent px-4 font-semibold text-cinema-on-accent shadow-lg shadow-black/30 transition-colors hover:bg-cinema-accent-hover md:right-8"
+        classNames={{ content: 'hidden text-sm md:inline' }}
+        icon={<ShellIcon name="chat" className="size-6" />}
       >
-        <ShellIcon name="chat" className="size-6" />
-        <span className="hidden text-sm md:inline">AI Assistant</span>
-      </button>
+        AI Assistant
+      </Button>
       {/* Only visibility resets on navigation; future conversation data stays separate. */}
       <dialog
         key={location.key}
@@ -45,15 +47,14 @@ function AIChatPanel() {
                 AI Assistant
               </h2>
             </div>
-            <button
+            <Button
               ref={closeRef}
-              type="button"
+              type="text"
               aria-label="Close AI assistant"
               className="icon-button"
               onClick={() => dialogRef.current?.close()}
-            >
-              <ShellIcon name="close" />
-            </button>
+              icon={<ShellIcon name="close" />}
+            />
           </div>
           <div className="flex flex-1 flex-col items-center justify-center gap-4 py-10 text-center">
             <span className="flex size-16 items-center justify-center rounded-2xl bg-cinema-accent/10 text-cinema-accent">

@@ -89,7 +89,7 @@
     cursor: pointer;
   }
 
-  :where(a, button, input):focus-visible {
+  :where(a, button, input, select, textarea, [tabindex]):focus-visible {
     outline: 2px solid var(--cinema-primary);
     outline-offset: 4px;
   }
@@ -128,13 +128,7 @@
     width: var(--cinema-control-height);
     height: var(--cinema-control-height);
     border-radius: var(--cinema-radius);
-    color: var(--cinema-text-secondary);
-    background: transparent;
-  }
-
-  .icon-button:hover {
-    color: white;
-    background: #ffffff0d;
+    padding: 0;
   }
 
   .shell-dialog {
@@ -215,10 +209,14 @@
 
   .filter-label {
     position: absolute;
+    inline-size: max-content;
+    margin: 0;
+    border: 0;
     inset-block-start: -0.6rem;
     inset-inline-start: 0.75rem;
     z-index: 1;
     padding-inline: 0.35rem;
+    padding-block: 0;
     background: var(--cinema-surface);
     color: var(--cinema-text-secondary);
     font-size: 0.75rem;
@@ -253,25 +251,8 @@
     outline-offset: 3px;
   }
 
-  .filter-select {
-    appearance: none;
-    padding-inline-end: 2.5rem;
-    cursor: pointer;
-  }
-
-  .filter-select option {
-    color: var(--cinema-text-control);
-    background: var(--cinema-surface);
-  }
-
-  .filter-select-chevron {
-    position: absolute;
-    inset-block-start: 50%;
-    inset-inline-end: 1rem;
-    transform: translateY(-50%);
-    color: var(--cinema-text-secondary);
-    font-size: 0.65rem;
-    pointer-events: none;
+  .filter-text-input {
+    background: transparent;
   }
 
   .filter-year-range {
@@ -294,46 +275,14 @@
     outline: none;
   }
 
-  .filter-switch {
-    position: relative;
-    flex-shrink: 0;
-    inline-size: 2.75rem;
-    block-size: 1.5rem;
+  .preview-search-button:disabled {
+    border-color: transparent;
+    background: color-mix(in srgb, var(--cinema-primary) 70%, transparent);
+    color: var(--cinema-background);
   }
 
-  .filter-switch-track {
-    position: absolute;
-    inset: 0;
-    border: 1px solid #475569;
-    border-radius: 999px;
-    background: var(--cinema-fill);
-  }
-
-  .filter-switch-track::after {
-    content: '';
-    position: absolute;
-    inset-block-start: 0.125rem;
-    inset-inline-start: 0.125rem;
-    inline-size: 1.125rem;
-    block-size: 1.125rem;
-    border-radius: 50%;
-    background: var(--cinema-text-control);
-    transition: inset-inline-start 150ms ease;
-  }
-
-  .filter-switch input:checked + .filter-switch-track {
-    border-color: var(--cinema-primary);
-    background: var(--cinema-primary);
-  }
-
-  .filter-switch input:checked + .filter-switch-track::after {
-    inset-inline-start: 1.375rem;
-    background: var(--cinema-text-on-primary);
-  }
-
-  .filter-switch input:focus-visible + .filter-switch-track {
-    outline: 2px solid var(--cinema-primary);
-    outline-offset: 3px;
+  .filter-upcoming-switch[aria-checked='true'] {
+    --cinema-switch-handle: var(--cinema-text-on-primary);
   }
 
   @keyframes inline-search-expand {

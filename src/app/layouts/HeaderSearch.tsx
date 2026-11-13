@@ -1,13 +1,15 @@
-import { useEffect, useRef, useState } from 'react'
-import AdvancedSearchPanel from './AdvancedSearchPanel.tsx'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
+import { Button, Input, type InputRef } from 'antd'
 import ShellIcon from './ShellIcon.tsx'
+
+const AdvancedSearchPanel = lazy(() => import('./AdvancedSearchPanel.tsx'))
 
 function HeaderSearch() {
   const [isExpanded, setIsExpanded] = useState(false)
   const [isSettingsOpen, setIsSettingsOpen] = useState(false)
-  const triggerRef = useRef<HTMLButtonElement>(null)
-  const inputRef = useRef<HTMLInputElement>(null)
-  const settingsButtonRef = useRef<HTMLButtonElement>(null)
+  const triggerRef = useRef<HTMLButtonElement | HTMLAnchorElement>(null)
+  const inputRef = useRef<InputRef>(null)
+  const settingsButtonRef = useRef<HTMLButtonElement | HTMLAnchorElement>(null)
   const settingsPanelRef = useRef<HTMLElement>(null)
   const restoreTriggerFocus = useRef(false)
 
@@ -68,17 +70,15 @@ function HeaderSearch() {
       }}
     >
       {!isExpanded ? (
-        <button
+        <Button
           ref={triggerRef}
-          type="button"
           aria-label="Expand search"
           aria-expanded={false}
           aria-controls="header-search-controls"
           onClick={() => setIsExpanded(true)}
-          className="icon-button ml-auto flex border border-cinema-border bg-cinema-surface"
-        >
-          <ShellIcon name="search" />
-        </button>
+          className="icon-button ml-auto flex border border-cinema-border bg-cinema-surface text-cinema-muted"
+          icon={<ShellIcon name="search" />}
+        />
       ) : (
         <div
           id="header-search-controls"
@@ -87,17 +87,20 @@ function HeaderSearch() {
           <label className="flex min-w-0 items-center gap-3 px-3 text-cinema-muted">
             <span className="sr-only">Search movies and TV shows</span>
             <ShellIcon name="search" className="size-5 shrink-0" />
-            <input
+            <Input
               ref={inputRef}
+              id="header-search-input"
+              name="query"
               type="search"
+              variant="borderless"
               placeholder="Search movies and TV shows"
               aria-describedby="search-description"
-              className="min-h-12 min-w-0 w-full border-0 bg-transparent text-base text-white placeholder:text-cinema-muted focus:outline-none"
+              className="min-h-12 min-w-0 w-full p-0 text-base text-cinema-text placeholder:text-cinema-muted focus:outline-none"
             />
           </label>
-          <button
+          <Button
             ref={settingsButtonRef}
-            type="button"
+            type="text"
             aria-label="Advanced search settings"
             aria-expanded={isSettingsOpen}
             aria-controls="advanced-search-settings"
@@ -106,19 +109,17 @@ function HeaderSearch() {
               else setIsSettingsOpen(true)
             }}
             className={`icon-button ${isSettingsOpen ? 'bg-cinema-accent/10 text-cinema-accent' : ''}`}
-          >
-            <ShellIcon name="settings" />
-          </button>
-          <button
-            type="button"
+            icon={<ShellIcon name="settings" />}
+          />
+          <Button
+            type="text"
             aria-label="Collapse search"
             aria-expanded={true}
             aria-controls="header-search-controls"
             className="icon-button"
             onClick={collapseSearch}
-          >
-            <ShellIcon name="close" />
-          </button>
+            icon={<ShellIcon name="close" />}
+          />
           <p id="search-description" className="sr-only">
             Search is coming soon. This input is a preview and does not search yet.
           </p>
@@ -133,7 +134,9 @@ function HeaderSearch() {
           aria-describedby="advanced-search-description"
           className="advanced-search-panel"
         >
-          <AdvancedSearchPanel onClose={closeSettings} />
+          <Suspense fallback={<p role="status" className="p-5 text-cinema-muted">Loading advanced search…</p>}>
+            <AdvancedSearchPanel onClose={closeSettings} />
+          </Suspense>
         </section>
       )}
     </div>
