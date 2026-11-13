@@ -5,7 +5,7 @@ import AIChatPanel from './AIChatPanel.tsx'
 
 function AppLayout() {
   return (
-    <div className="min-h-dvh bg-cinema-bg text-slate-100">
+    <div className="min-h-dvh bg-cinema-bg text-cinema-text">
       <a className="skip-link" href="#main-content">
         Skip to content
       </a>

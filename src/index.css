@@ -1,14 +1,27 @@
 ﻿/* Keep explicit base styles; Tailwind Preflight remains disabled. */
-@layer theme, base, components, utilities;
+@layer theme, base, antd, components, utilities;
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/utilities.css" layer(utilities);
 
-@theme {
-  --color-cinema-bg: #0b101a;
-  --color-cinema-surface: #131c2b;
-  --color-cinema-border: #2a3547;
-  --color-cinema-muted: #a6b2c5;
-  --color-cinema-accent: #ff9955;
+/* Values come from the resolved AntD theme in app/theme/theme.ts. */
+@theme inline {
+  --color-cinema-bg: var(--cinema-background);
+  --color-cinema-surface: var(--cinema-surface);
+  --color-cinema-elevated: var(--cinema-surface-elevated);
+  --color-cinema-border: var(--cinema-border);
+  --color-cinema-text: var(--cinema-text);
+  --color-cinema-muted: var(--cinema-text-secondary);
+  --color-cinema-control: var(--cinema-text-control);
+  --color-cinema-accent: var(--cinema-primary);
+  --color-cinema-accent-hover: var(--cinema-primary-hover);
+  --color-cinema-on-accent: var(--cinema-text-on-primary);
+  --color-cinema-success: var(--cinema-success);
+  --color-cinema-warning: var(--cinema-warning);
+  --color-cinema-error: var(--cinema-error);
+  --font-cinema: var(--cinema-font-family);
+  --radius-cinema: var(--cinema-radius);
+  --radius-cinema-sm: var(--cinema-radius-sm);
+  --radius-cinema-lg: var(--cinema-radius-lg);
 }
 
 @layer base {
@@ -19,15 +32,16 @@
   }
 
   :root {
-    font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+    font-family: var(--cinema-font-family);
+    font-size: var(--cinema-font-size);
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color-scheme: dark;
-    color: #f1f5f9;
-    background: var(--color-cinema-bg);
-    line-height: 1.5;
+    color: var(--cinema-text);
+    background: var(--cinema-background);
+    line-height: var(--cinema-line-height);
   }
 
   body {
@@ -54,7 +68,7 @@
 
   main p {
     margin-top: 1rem;
-    color: var(--color-cinema-muted);
+    color: var(--cinema-text-secondary);
     overflow-wrap: anywhere;
   }
 
@@ -76,7 +90,7 @@
   }
 
   :where(a, button, input):focus-visible {
-    outline: 2px solid var(--color-cinema-accent);
+    outline: 2px solid var(--cinema-primary);
     outline-offset: 4px;
   }
 
@@ -98,8 +112,8 @@
     transform: translateY(-200%);
     border-radius: 0.5rem;
     padding: 0.75rem 1rem;
-    color: var(--color-cinema-bg);
-    background: var(--color-cinema-accent);
+    color: var(--cinema-text-on-primary);
+    background: var(--cinema-primary);
   }
 
   .skip-link:focus {
@@ -111,10 +125,10 @@
     flex-shrink: 0;
     align-items: center;
     justify-content: center;
-    width: 3rem;
-    height: 3rem;
-    border-radius: 0.75rem;
-    color: var(--color-cinema-muted);
+    width: var(--cinema-control-height);
+    height: var(--cinema-control-height);
+    border-radius: var(--cinema-radius);
+    color: var(--cinema-text-secondary);
     background: transparent;
   }
 
@@ -130,10 +144,10 @@
     max-height: calc(100dvh - 2rem - env(safe-area-inset-top) - env(safe-area-inset-bottom));
     overflow: auto;
     overscroll-behavior: contain;
-    border: 1px solid var(--color-cinema-border);
+    border: 1px solid var(--cinema-border);
     border-radius: 1.25rem;
-    color: #f1f5f9;
-    background: var(--color-cinema-surface);
+    color: var(--cinema-text);
+    background: var(--cinema-surface);
     box-shadow: 0 24px 80px #0008;
   }
 
@@ -155,7 +169,7 @@
     grid-row: 1;
     justify-self: end;
     min-width: 0;
-    width: 3rem;
+    width: var(--cinema-control-height);
   }
 
   .header-search[data-expanded='true'] {
@@ -170,10 +184,10 @@
     grid-template-columns: minmax(0, 1fr) 3rem 3rem;
     align-items: center;
     gap: 0.25rem;
-    border: 1px solid var(--color-cinema-border);
-    border-radius: 1rem;
+    border: 1px solid var(--cinema-border);
+    border-radius: var(--cinema-radius-lg);
     padding: 0.125rem;
-    background: var(--color-cinema-surface);
+    background: var(--cinema-surface);
     animation: inline-search-expand 180ms ease-out;
   }
 
@@ -187,10 +201,10 @@
     max-block-size: max(0px, calc(100dvh - 17rem - env(safe-area-inset-top) - env(safe-area-inset-bottom)));
     overflow: auto;
     overscroll-behavior: contain;
-    border: 1px solid var(--color-cinema-border);
-    border-radius: 1rem;
-    color: #f1f5f9;
-    background: var(--color-cinema-surface);
+    border: 1px solid var(--cinema-border);
+    border-radius: var(--cinema-radius-lg);
+    color: var(--cinema-text);
+    background: var(--cinema-surface);
     box-shadow: 0 16px 48px #0006;
   }
 
@@ -205,8 +219,8 @@
     inset-inline-start: 0.75rem;
     z-index: 1;
     padding-inline: 0.35rem;
-    background: var(--color-cinema-surface);
-    color: var(--color-cinema-muted);
+    background: var(--cinema-surface);
+    color: var(--cinema-text-secondary);
     font-size: 0.75rem;
     line-height: 1.25rem;
   }
@@ -215,11 +229,11 @@
     inline-size: 100%;
     min-inline-size: 0;
     min-block-size: 3.25rem;
-    border: 1px solid var(--color-cinema-border);
-    border-radius: 0.625rem;
+    border: 1px solid var(--cinema-border);
+    border-radius: var(--cinema-radius-sm);
     padding: 0.75rem 0.875rem;
     background: transparent;
-    color: #e2e8f0;
+    color: var(--cinema-text-control);
     font: inherit;
     font-size: 0.875rem;
     line-height: 1.5rem;
@@ -227,15 +241,15 @@
 
   .filter-control::placeholder,
   .filter-year-input::placeholder {
-    color: #8593a8;
+    color: var(--cinema-text-placeholder);
   }
 
   .filter-control:focus-within {
-    border-color: var(--color-cinema-accent);
+    border-color: var(--cinema-primary);
   }
 
   .filter-control:focus-visible {
-    outline: 2px solid var(--color-cinema-accent);
+    outline: 2px solid var(--cinema-primary);
     outline-offset: 3px;
   }
 
@@ -246,8 +260,8 @@
   }
 
   .filter-select option {
-    color: #e2e8f0;
-    background: var(--color-cinema-surface);
+    color: var(--cinema-text-control);
+    background: var(--cinema-surface);
   }
 
   .filter-select-chevron {
@@ -255,7 +269,7 @@
     inset-block-start: 50%;
     inset-inline-end: 1rem;
     transform: translateY(-50%);
-    color: var(--color-cinema-muted);
+    color: var(--cinema-text-secondary);
     font-size: 0.65rem;
     pointer-events: none;
   }
@@ -292,7 +306,7 @@
     inset: 0;
     border: 1px solid #475569;
     border-radius: 999px;
-    background: #253247;
+    background: var(--cinema-fill);
   }
 
   .filter-switch-track::after {
@@ -303,22 +317,22 @@
     inline-size: 1.125rem;
     block-size: 1.125rem;
     border-radius: 50%;
-    background: #e2e8f0;
+    background: var(--cinema-text-control);
     transition: inset-inline-start 150ms ease;
   }
 
   .filter-switch input:checked + .filter-switch-track {
-    border-color: var(--color-cinema-accent);
-    background: var(--color-cinema-accent);
+    border-color: var(--cinema-primary);
+    background: var(--cinema-primary);
   }
 
   .filter-switch input:checked + .filter-switch-track::after {
     inset-inline-start: 1.375rem;
-    background: var(--color-cinema-bg);
+    background: var(--cinema-text-on-primary);
   }
 
   .filter-switch input:focus-visible + .filter-switch-track {
-    outline: 2px solid var(--color-cinema-accent);
+    outline: 2px solid var(--cinema-primary);
     outline-offset: 3px;
   }
 

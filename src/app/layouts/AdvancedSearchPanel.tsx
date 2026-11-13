@@ -183,7 +183,7 @@ function AdvancedSearchPanel({ onClose }: { onClose: () => void }) {
           <div className="flex shrink-0 gap-3">
             <button
               type="reset"
-              className="min-h-12 flex-1 rounded-xl border border-cinema-border bg-transparent px-5 text-sm font-medium text-slate-200 transition-colors hover:bg-white/5 sm:flex-none"
+              className="min-h-12 flex-1 rounded-xl border border-cinema-border bg-transparent px-5 text-sm font-medium text-cinema-control transition-colors hover:bg-white/5 sm:flex-none"
             >
               Reset
             </button>

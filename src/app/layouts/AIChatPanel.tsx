@@ -20,7 +20,7 @@ function AIChatPanel() {
         aria-haspopup="dialog"
         aria-controls="ai-chat-dialog"
         onClick={openChat}
-        className="chat-trigger fixed right-5 z-20 flex min-h-14 min-w-14 items-center justify-center gap-3 rounded-2xl border border-orange-300/30 bg-cinema-accent px-4 font-semibold text-cinema-bg shadow-lg shadow-black/30 transition-colors hover:bg-orange-300 md:right-8"
+        className="chat-trigger fixed right-5 z-20 flex min-h-14 min-w-14 items-center justify-center gap-3 rounded-2xl border border-cinema-accent-hover/30 bg-cinema-accent px-4 font-semibold text-cinema-on-accent shadow-lg shadow-black/30 transition-colors hover:bg-cinema-accent-hover md:right-8"
       >
         <ShellIcon name="chat" className="size-6" />
         <span className="hidden text-sm md:inline">AI Assistant</span>
